@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صدقة جارية | محمود البي</title>
+    <!-- استدعاء خطوط عربية من جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1b4332; /* أخضر إسلامي داكن */
+            --secondary-color: #d4af37; /* ذهبي */
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: radial-gradient(var(--secondary-color) 0.5px, transparent 0.5px), radial-gradient(var(--secondary-color) 0.5px, var(--bg-color) 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-attachment: fixed;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary-color), #081c15);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-bottom: 5px solid var(--secondary-color);
+        }
+
+        header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--primary-color);
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+        }
+
+        .quran-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            line-height: 2;
+            color: #2c3e50;
+        }
+
+        .duaa-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        /* تصميم السبحة */
+        .sebha-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .dhikr-display {
+            font-size: 2rem;
+            font-family: 'Amiri', serif;
+            color: var(--primary-color);
+            font-weight: bold;
+            min-height: 50px;
+        }
+
+        .counter-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            background: #333;
+            padding: 10px 40px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .sebha-btn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-color) 0%, #081c15 100%);
+            border: 5px solid var(--secondary-color);
+            color: white;
+            font-size: 1.5rem;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(27, 67, 50, 0.4);
+            transition: all 0.1s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .sebha-btn:active {
+            transform: scale(0.92);
+            box-shadow: 0 5px 10px rgba(27, 67, 50, 0.4);
+        }
+
+        .sebha-btn.pulse {
+            animation: pulse-animation 0.3s ease;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        .reset-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid #ccc;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .reset-btn:hover {
+            background-color: #eee;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .quran-text { font-size: 1.5rem; }
+            .duaa-text { font-size: 1.1rem; }
+            .sebha-btn { width: 120px; height: 120px; font-size: 1.2rem; }
+            .counter-display { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- الترويسة -->
+        <header>
+            <h1>صدقة جارية</h1>
+            <p>عن روح المغفور له بإذن الله تعالى</p>
+            <h2 style="margin-top: 15px; font-size: 2.2rem; color: #fff;">الوالد / محمود البي</h2>
+            <p style="margin-top: 10px; font-size: 1rem; color: #ccc;">نسألكم الفاتحة والدعاء له بالرحمة والمغفرة</p>
+        </header>
+
+        <!-- آيات قرآنية -->
+        <section class="section-card">
+            <h3 class="section-title">آيات من الذكر الحكيم</h3>
+            <p class="quran-text">
+                ﴿ يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ * ارْجِعِي إِلَى رَبِّكِ رَاضِيَةً مَرْضِيَّةً * فَادْخُلِي فِي عِبَادِي * وَادْخُلِي جَنَّتِي ﴾
+            </p>
+            <p class="quran-text" style="font-size: 1.2rem; margin-top: 15px; color: #666;">[سورة الفجر: 27-30]</p>
+        </section>
+
+        <!-- الدعاء -->
+        <section class="section-card">
+            <h3 class="section-title">دعاء للمتوفى</h3>
+            <p class="duaa-text">
+                اللهم اغفر لـ (محمود البي) وارحمه، وعافه واعف عنه، وأكرم نزله، ووسع مدخله، واغسله بالماء والثلج والبرد، ونقّه من الخطايا كما ينقّى الثوب الأبيض من الدنس.<br><br>
+                اللهم أبدله داراً خيراً من داره، وأهلاً خيراً من أهله، وأدخله الجنة، وأعذه من عذاب القبر ومن عذاب النار. اللهم إن كان محسناً فزد في حسناته، وإن كان مسيئاً فتجاوز عن سيئاته. اللهم أنزله منازل الصديقين والشهداء والصالحين وحسن أولئك رفيقاً.
+            </p>
+        </section>
+
+        <!-- السبحة الإلكترونية -->
+        <section class="section-card">
+            <h3 class="section-title">مسبحة الاستغفار والأذكار</h3>
+            <p style="margin-bottom: 20px; color: #666;">(تتغير الأذكار تلقائياً كل 33 تسبيحة)</p>
+            
+            <div class="sebha-container">
+                <div class="dhikr-display" id="dhikr-text">أَسْتَغْفِرُ اللَّهَ</div>
+                <div class="counter-display" id="count-display">0</div>
+                <button class="sebha-btn" id="sebha-btn">سبّح</button>
+                <button class="reset-btn" id="reset-btn">تصفير العداد</button>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color);">اللهم اجعل ثواب هذا التسبيح في ميزان حسناته</p>
+        </section>
+
+        <!-- التذييل -->
+        <footer>
+            <p>تم التصميم كصدقة جارية عن روح الوالد محمود البي - رحمه الله وأسكنه فسيح جناته.</p>
+        </footer>
+    </div>
+
+    <!-- كود الجافاسكربت للتفاعل -->
+    <script>
+        // المتغيرات الأساسية
+        let count = 0;
+        let totalCount = 0; // لحساب إجمالي التسبيحات إذا أردت
+        
+        // مصفوفة الأذكار
+        const adhkar = [
+            "أَسْتَغْفِرُ اللَّهَ",
+            "سُبْحَانَ اللَّهِ",
+            "الْحَمْدُ لِلَّهِ",
+            "لَا إِلَهَ إِلَّا اللَّهُ",
+            "اللَّهُ أَكْبَرُ",
+            "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+            "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ"
+        ];
+        
+        let currentDhikrIndex = 0;
+
+        // جلب عناصر الـ HTML
+        const sebhaBtn = document.getElementById('sebha-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const countDisplay = document.getElementById('count-display');
+        const dhikrText = document.getElementById('dhikr-text');
+
+        // وظيفة النقر على زر السبحة
+        sebhaBtn.addEventListener('click', () => {
+            count++;
+            
+            // تحديث العداد
+            countDisplay.innerText = count;
+
+            // تغيير الذكر كل 33 مرة
+            if (count % 33 === 0) {
+                currentDhikrIndex = (currentDhikrIndex + 1) % adhkar.length;
+                dhikrText.style.opacity = 0; // تأثير انتقال بسيط
+                setTimeout(() => {
+                    dhikrText.innerText = adhkar[currentDhikrIndex];
+                    dhikrText.style.opacity = 1;
+                }, 200);
+            }
+
+            // إضافة تأثير الحركة للزر
+            sebhaBtn.classList.remove('pulse');
+            void sebhaBtn.offsetWidth; // إعادة تشغيل الحركة
+            sebhaBtn.classList.add('pulse');
+
+            // اهتزاز خفيف للهاتف (إذا كان المتصفح يدعم ذلك)
+            if (navigator.vibrate) {
+                navigator.vibrate(50); // اهتزاز لمدة 50 ملي ثانية
+            }
+        });
+
+        // وظيفة تصفير العداد
+        resetBtn.addEventListener('click', () => {
+            if(confirm('هل أنت متأكد من تصفير العداد؟')) {
+                count = 0;
+                currentDhikrIndex = 0;
+                countDisplay.innerText = count;
+                dhikrText.innerText = adhkar[currentDhikrIndex];
+            }
+        });
+    </script>
+</body>
+</html>
