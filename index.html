@@ -3,273 +3,388 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- إعدادات لمنع التكبير وتصرف كأنه تطبيق هاتف -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>صدقة جارية | محمود البي</title>
-    <!-- استدعاء خطوط فخمة من جوجل -->
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- خطوط جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --dark-bg: #0d1b16; /* لون أخضر ليلي عميق */
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --app-bg: #050505; /* أسود OLED */
+            --card-bg: rgba(25, 25, 25, 0.6);
+            --gold: #e2c275;
+            --gold-glow: rgba(226, 194, 117, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #888888;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* إزالة مربع الضغط في الهواتف */
+            /* خصائص لجعل الصفحة تتصرف كتطبيق */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(-45deg, #0d1b16, #070e0b, #132a22, #0a1410);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--app-bg);
+            color: var(--text-main);
+            /* خلفية بتدرج ليلي خفيف جداً */
+            background-image: radial-gradient(circle at 50% 0%, #151f1a 0%, var(--app-bg) 60%);
+            background-attachment: fixed;
             min-height: 100vh;
-            overflow-x: hidden;
+            overscroll-behavior-y: none; /* منع السحب للتحديث في الهواتف */
+            display: flex;
+            justify-content: center;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* حاوية التطبيق */
+        .app-wrapper {
+            width: 100%;
+            max-width: 480px; /* حجم شاشة الهاتف */
+            padding: 20px 15px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        /* حاوية التصميم */
-        .app-container {
-            max-width: 500px; /* مقاس مثالي للهواتف */
-            margin: 0 auto;
-            padding: 20px 15px;
-            padding-bottom: 80px;
-        }
-
-        /* البطاقات الزجاجية (Glassmorphism) */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
+        /* البطاقات الزجاجية الأنيقة */
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
             padding: 25px 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeUp 0.8s ease-out forwards;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
         }
 
-        @keyframes fadeInUp {
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* تأخير ظهور البطاقات */
-        .card-1 { animation-delay: 0.2s; }
-        .card-2 { animation-delay: 0.4s; }
-        .card-3 { animation-delay: 0.6s; }
-
         /* الترويسة */
-        .header-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 2.8rem;
-            color: var(--gold);
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        .header-box {
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-box::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .title {
+            font-family: 'Amiri', serif;
+            font-size: 2.4rem;
+            background: linear-gradient(to left, #fff, var(--gold));
+            -webkit-background-clip: text;
+            color: transparent;
             margin-bottom: 5px;
-            line-height: 1.2;
         }
 
-        .header-subtitle {
-            font-size: 1rem;
-            color: #a8b8b0;
-            font-weight: 300;
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
         }
 
-        /* النصوص القرآنية والدعاء */
-        .section-title {
-            color: var(--gold-light);
-            font-size: 1.2rem;
+        /* النصوص (قرآن ودعاء) */
+        .section-label {
+            font-size: 0.85rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 15px;
-            display: inline-block;
-            border-bottom: 1px solid var(--gold);
-            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-label::before, .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(226, 194, 117, 0.2);
         }
 
         .quran-text {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 1.8rem;
-            line-height: 1.8;
-            color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Amiri', serif;
+            font-size: 1.6rem;
+            line-height: 2;
+            text-align: center;
+            color: #ececec;
         }
 
         .duaa-text {
-            font-size: 1.15rem;
-            line-height: 1.9;
-            color: #e2e8e4;
-            text-align: justify;
-            text-align-last: center;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #cccccc;
+            text-align: center;
         }
 
-        /* تصميم السبحة الدائرية الذكية */
-        .tasbeeh-wrapper {
+        /* -- واجهة السبحة (التصميم الأساسي) -- */
+        .tasbeeh-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .dhikr-display {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            color: var(--gold);
+            min-height: 60px;
+            text-align: center;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        /* العداد الدائري SVG */
+        .ring-wrapper {
             position: relative;
-            width: 220px;
-            height: 220px;
-            margin: 30px auto;
+            width: 260px;
+            height: 260px;
+            margin: 30px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 50%;
-            /* شريط التقدم الدائري */
-            background: conic-gradient(var(--gold) 0deg, rgba(255,255,255,0.05) 0deg);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transition: background 0.3s ease;
         }
 
-        .tasbeeh-btn {
+        .progress-ring {
             position: absolute;
-            width: 190px;
-            height: 190px;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg); /* بداية الدائرة من الأعلى */
+            pointer-events: none;
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            stroke-linecap: round;
+        }
+
+        /* الزر التفاعلي المركزي */
+        .btn-tap {
+            position: relative;
+            width: 210px;
+            height: 210px;
             border-radius: 50%;
-            background: radial-gradient(circle, #1a362b 0%, #0d1b16 100%);
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
             border: none;
-            color: white;
+            box-shadow: 
+                inset 5px 5px 15px rgba(255,255,255,0.05),
+                inset -5px -5px 15px rgba(0,0,0,0.8),
+                0 10px 30px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-            z-index: 2;
-            transition: transform 0.1s;
+            z-index: 10;
+            transition: transform 0.1s ease;
+            overflow: hidden;
         }
 
-        .tasbeeh-btn:active {
-            transform: scale(0.95);
+        .btn-tap:active {
+            transform: scale(0.96);
+            box-shadow: 
+                inset 8px 8px 20px rgba(0,0,0,0.9),
+                inset -2px -2px 10px rgba(255,255,255,0.02);
         }
 
-        .count-number {
-            font-size: 3.5rem;
+        .count-val {
+            font-size: 4.5rem;
             font-weight: 900;
-            color: var(--gold);
-            font-family: 'Tajawal', sans-serif;
+            color: #ffffff;
             line-height: 1;
-            margin-bottom: 5px;
+            margin-top: 10px;
         }
 
-        .total-number {
-            font-size: 0.9rem;
-            color: #888;
+        .target-val {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 5px;
         }
 
-        .dhikr-text {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 2rem;
-            color: var(--gold-light);
-            margin-bottom: 20px;
-            min-height: 60px;
+        /* معلومات الإحصائيات أسفل السبحة */
+        .stats-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.3s;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+            margin-top: 10px;
         }
 
-        .reset-btn {
-            background: transparent;
-            color: #888;
-            border: 1px solid #444;
-            padding: 8px 25px;
-            border-radius: 20px;
-            font-family: 'Tajawal', sans-serif;
-            margin-top: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .reset-btn:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-        }
-
-        footer {
+        .stat-item {
             text-align: center;
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.03);
+            flex: 1;
+            margin: 0 5px;
         }
 
-        /* تأثير التموج عند الضغط */
+        .stat-item span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .stat-item strong {
+            display: block;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-top: 3px;
+        }
+
+        /* تأثير التموج */
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background: rgba(212, 175, 55, 0.4);
+            background: radial-gradient(circle, rgba(226,194,117,0.3) 0%, transparent 70%);
             transform: scale(0);
-            animation: ripple-anim 0.6s linear;
+            animation: ripple-effect 0.6s ease-out;
             pointer-events: none;
         }
 
-        @keyframes ripple-anim {
-            to { transform: scale(4); opacity: 0; }
+        @keyframes ripple-effect {
+            100% { transform: scale(3); opacity: 0; }
         }
+
+        .reset-icon {
+            margin-top: 25px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .reset-icon:active {
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-wrapper">
         
         <!-- الترويسة -->
-        <header class="glass-card card-1" style="padding: 35px 20px;">
-            <p class="header-subtitle">صدقة جارية عن روح المغفور له بإذن الله</p>
-            <h1 class="header-title">محمود البي</h1>
-            <p style="color: #888; font-size: 0.9rem; margin-top: 10px;">نسألكم الفاتحة والدعاء له</p>
-        </header>
+        <div class="glass-panel header-box delay-1">
+            <div class="subtitle">صدقة جارية عن روح الوالد</div>
+            <div class="title">محمود البي</div>
+            <div class="subtitle" style="margin-top: 8px;">نسألكم الدعاء له بالرحمة والمغفرة</div>
+        </div>
 
-        <!-- الآيات -->
-        <section class="glass-card card-2">
-            <h2 class="section-title">آيات من الذكر الحكيم</h2>
-            <p class="quran-text">
+        <!-- القرآن والدعاء (مدمجة بتصميم ذكي) -->
+        <div class="glass-panel delay-2">
+            <div class="section-label">آيات بينات</div>
+            <div class="quran-text">
                 ﴿ يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ ✧ ارْجِعِي إِلَى رَبِّكِ رَاضِيَةً مَرْضِيَّةً ✧ فَادْخُلِي فِي عِبَادِي ✧ وَادْخُلِي جَنَّتِي ﴾
-            </p>
-        </section>
-
-        <!-- الدعاء -->
-        <section class="glass-card card-3">
-            <h2 class="section-title">دعاء للمتوفى</h2>
-            <p class="duaa-text">
-                اللهم اغفر له وارحمه، وعافه واعف عنه، وأكرم نزله، ووسع مدخله، واغسله بالماء والثلج والبرد، ونقّه من الخطايا كما ينقّى الثوب الأبيض من الدنس. اللهم أبدله داراً خيراً من داره، وأهلاً خيراً من أهله، وأدخله الجنة، وأعذه من عذاب القبر ومن عذاب النار.
-            </p>
-        </section>
-
-        <!-- السبحة الذكية -->
-        <section class="glass-card card-3">
-            <h2 class="section-title">مسبحة الأذكار</h2>
-            <p style="font-size: 0.85rem; color: #aaa;">(اكتمل الدائرة لتغيير الذكر تلقائياً)</p>
-            
-            <div class="dhikr-text" id="dhikr-text">أَسْتَغْفِرُ اللَّهَ</div>
-
-            <div class="tasbeeh-wrapper" id="progress-ring">
-                <button class="tasbeeh-btn" id="sebha-btn">
-                    <span class="count-number" id="count-display">0</span>
-                    <span class="total-number">الإجمالي: <span id="total-display">0</span></span>
-                </button>
             </div>
+            
+            <div class="section-label" style="margin-top: 25px;">دعاء للمتوفى</div>
+            <div class="duaa-text">
+                اللهم اغفر له وارحمه، وعافه واعف عنه، وأكرم نزله، ووسع مدخله، واغسله بالماء والثلج والبرد. اللهم أبدله داراً خيراً من داره، وأهلاً خيراً من أهله، وأدخله الجنة بغير حساب.
+            </div>
+        </div>
 
-            <button class="reset-btn" id="reset-btn">تصفير العداد</button>
-        </section>
+        <!-- تطبيق السبحة -->
+        <div class="glass-panel delay-3">
+            <div class="tasbeeh-container">
+                
+                <div class="dhikr-display" id="dhikrText">أَسْتَغْفِرُ اللَّهَ</div>
 
-        <footer>
-            اللهم اجعل هذا العمل خالصاً لوجهك الكريم ومتقبلاً عن روح "محمود البي"
-        </footer>
+                <!-- العداد مع حلقة الـ SVG الملساء -->
+                <div class="ring-wrapper">
+                    <!-- حلقة SVG -->
+                    <svg class="progress-ring" width="260" height="260">
+                        <!-- الدائرة الخلفية -->
+                        <circle stroke="rgba(255,255,255,0.03)" stroke-width="6" fill="transparent" r="120" cx="130" cy="130"/>
+                        <!-- دائرة التقدم الملونة -->
+                        <circle id="progressCircle" class="progress-ring__circle" stroke="var(--gold)" stroke-width="6" fill="transparent" r="120" cx="130" cy="130"/>
+                    </svg>
 
+                    <!-- الزر الرئيسي -->
+                    <button class="btn-tap" id="btnTap">
+                        <div class="count-val" id="countVal">0</div>
+                        <div class="target-val">من 33</div>
+                    </button>
+                </div>
+
+                <!-- إحصائيات -->
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span>إجمالي التسبيحات</span>
+                        <strong id="totalCount">0</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>الدورات المكتملة</span>
+                        <strong id="cycleCount">0</strong>
+                    </div>
+                </div>
+
+                <!-- زر التصفير -->
+                <div class="reset-icon" id="btnReset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    تصفير العدادات
+                </div>
+
+            </div>
+        </div>
+        
     </div>
 
-    <!-- أكواد التفاعل -->
+    <!-- كود التشغيل (JavaScript) -->
     <script>
-        // الأذكار
+        // إعدادات الـ SVG للتقدم الدائري
+        const circle = document.getElementById('progressCircle');
+        const radius = circle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+        
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = circumference; // البداية من الصفر (الدائرة مخفية)
+
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // متغيرات السبحة
+        let count = 0;
+        let total = 0;
+        let cycles = 0;
+        const target = 33;
+        
         const adhkar = [
             "أَسْتَغْفِرُ اللَّهَ",
             "سُبْحَانَ اللَّهِ",
@@ -277,93 +392,115 @@
             "لَا إِلَهَ إِلَّا اللَّهُ",
             "اللَّهُ أَكْبَرُ",
             "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
-            "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ"
+            "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ"
         ];
-        
-        let count = 0;       // العداد الحالي (يصل لـ 33)
-        let totalCount = 0;  // العداد الإجمالي
         let dhikrIndex = 0;
 
-        const sebhaBtn = document.getElementById('sebha-btn');
-        const countDisplay = document.getElementById('count-display');
-        const totalDisplay = document.getElementById('total-display');
-        const dhikrText = document.getElementById('dhikr-text');
-        const progressRing = document.getElementById('progress-ring');
-        const resetBtn = document.getElementById('reset-btn');
+        // عناصر الواجهة
+        const btnTap = document.getElementById('btnTap');
+        const countVal = document.getElementById('countVal');
+        const totalCountVal = document.getElementById('totalCount');
+        const cycleCountVal = document.getElementById('cycleCount');
+        const dhikrText = document.getElementById('dhikrText');
+        const btnReset = document.getElementById('btnReset');
 
-        // دالة الضغط على السبحة
-        sebhaBtn.addEventListener('click', function(e) {
+        // وظيفة الضغط
+        btnTap.addEventListener('click', function(e) {
             count++;
-            totalCount++;
-            
+            total++;
+
             // تحديث الأرقام
-            countDisplay.innerText = count;
-            totalDisplay.innerText = totalCount;
+            countVal.textContent = count;
+            totalCountVal.textContent = total;
 
-            // حساب النسبة المئوية للدائرة (من 33)
-            let percentage = (count / 33) * 360;
-            progressRing.style.background = `conic-gradient(var(--gold) ${percentage}deg, rgba(255,255,255,0.05) ${percentage}deg)`;
+            // تحديث الدائرة
+            const percent = (count / target) * 100;
+            setProgress(percent);
 
-            // اهتزاز الهاتف (Haptic Feedback)
-            if (navigator.vibrate) {
-                // اهتزاز خفيف للضغطة العادية، واهتزاز أطول عند اكتمال 33
-                if (count === 33) navigator.vibrate([100, 50, 100]);
-                else navigator.vibrate(40);
-            }
-
-            // إنشاء تأثير التموج (Ripple Effect)
+            // إضافة تأثير التموج البصري (Ripple)
             createRipple(e, this);
 
-            // تغيير الذكر عند 33
-            if (count === 33) {
+            // اهتزاز الهاتف (Haptic Feedback) - يعمل على الأندرويد وبعض المتصفحات
+            if (navigator.vibrate) {
+                if (count === target) navigator.vibrate([150, 50, 150]); // اهتزاز مميز عند الاكتمال
+                else navigator.vibrate(30); // اهتزاز خفيف للضغطة العادية
+            }
+
+            // التحقق من اكتمال الدورة (33)
+            if (count === target) {
+                cycles++;
+                cycleCountVal.textContent = cycles;
+                
+                // تأخير بسيط ليرى المستخدم امتلاء الدائرة قبل تصفيرها
                 setTimeout(() => {
                     count = 0;
-                    countDisplay.innerText = count;
-                    progressRing.style.background = `conic-gradient(var(--gold) 0deg, rgba(255,255,255,0.05) 0deg)`;
+                    countVal.textContent = count;
+                    setProgress(0);
                     
-                    dhikrIndex = (dhikrIndex + 1) % adhkar.length;
-                    
-                    // تأثير اختفاء وظهور الذكر
-                    dhikrText.style.opacity = 0;
-                    setTimeout(() => {
-                        dhikrText.innerText = adhkar[dhikrIndex];
-                        dhikrText.style.opacity = 1;
-                    }, 300);
-
-                }, 400); // تأخير بسيط ليرى المستخدم اكتمال الدائرة
+                    // تغيير الذكر بتأثير حركي
+                    changeDhikr();
+                }, 400);
             }
         });
 
-        // دالة إنشاء تأثير التموج
-        function createRipple(event, element) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(element.clientWidth, element.clientHeight);
-            const radius = diameter / 2;
-
-            circle.style.width = circle.style.height = `${diameter}px`;
+        // تأثير التغيير للذكر
+        function changeDhikr() {
+            dhikrIndex = (dhikrIndex + 1) % adhkar.length;
             
-            // حساب مكان الضغطة
-            const rect = element.getBoundingClientRect();
-            circle.style.left = `${event.clientX - rect.left - radius}px`;
-            circle.style.top = `${event.clientY - rect.top - radius}px`;
-            circle.classList.add('ripple');
-
-            const ripple = element.querySelector('.ripple');
-            if (ripple) ripple.remove();
-
-            element.appendChild(circle);
+            dhikrText.style.opacity = '0';
+            dhikrText.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                dhikrText.textContent = adhkar[dhikrIndex];
+                dhikrText.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    dhikrText.style.opacity = '1';
+                    dhikrText.style.transform = 'translateY(0)';
+                }, 50);
+            }, 300);
         }
 
-        // تصفير العداد
-        resetBtn.addEventListener('click', () => {
-            if(confirm('هل تريد تصفير العدادات بالكامل؟')) {
+        // إنشاء تأثير التموج (اللمسة البصرية)
+        function createRipple(e, button) {
+            const circleRipple = document.createElement('span');
+            circleRipple.classList.add('ripple');
+            
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            
+            // حساب موضع الضغطة لمركزة التأثير
+            const rect = button.getBoundingClientRect();
+            
+            // في حالة اللمس المتعدد نأخذ النقطة الأولى، وإلا نأخذ مكان الماوس
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            circleRipple.style.width = circleRipple.style.height = `${diameter}px`;
+            circleRipple.style.left = `${clientX - rect.left - radius}px`;
+            circleRipple.style.top = `${clientY - rect.top - radius}px`;
+            
+            button.appendChild(circleRipple);
+            
+            // إزالة العنصر بعد انتهاء الحركة
+            setTimeout(() => {
+                circleRipple.remove();
+            }, 600);
+        }
+
+        // تصفير العدادات
+        btnReset.addEventListener('click', () => {
+            if(confirm('هل تريد تصفير العدادات والبدء من جديد؟')) {
                 count = 0;
-                totalCount = 0;
+                total = 0;
+                cycles = 0;
                 dhikrIndex = 0;
-                countDisplay.innerText = count;
-                totalDisplay.innerText = totalCount;
-                dhikrText.innerText = adhkar[dhikrIndex];
-                progressRing.style.background = `conic-gradient(var(--gold) 0deg, rgba(255,255,255,0.05) 0deg)`;
+                
+                countVal.textContent = '0';
+                totalCountVal.textContent = '0';
+                cycleCountVal.textContent = '0';
+                dhikrText.textContent = adhkar[dhikrIndex];
+                setProgress(0);
             }
         });
     </script>
